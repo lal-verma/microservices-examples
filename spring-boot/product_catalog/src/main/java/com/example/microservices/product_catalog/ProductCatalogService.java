@@ -1,9 +1,9 @@
 package com.example.microservices.product_catalog;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,35 +11,41 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.function.ServerResponse;
 
 @RestController
 public class ProductCatalogService {
     
     @Autowired
-    private ProductCatalogRepository repository;
+    private MongoTemplate mongoTemplate;
 
     @PostMapping("/product")
     public Product addProduct(@RequestBody Product product){
-        return repository.insert(product);
+        return mongoTemplate.insert(product);
     }
 
     @PutMapping("/product")
-    public String updateProduct(@RequestBody Product product){
-        repository.save(product);
-        return "product updated successfully-"+product.getId();
+    public Product updateProduct(@RequestBody Product product){
+        return mongoTemplate.save(product);        
     }
 
     @GetMapping("/product/{id}")
-    public Optional<Product> getProductDetails(@PathVariable  String id){
-        return repository.findById(id);
+    public Product getProductDetails(@PathVariable  String id){
+        return mongoTemplate.findById(id,Product.class);
     }
 
 
     @DeleteMapping("/product/{id}")
     public String deleteProduct(@PathVariable String id) {
-        repository.deleteById(id);
+        Product toDeleteProduct = new Product();
+        toDeleteProduct.setId(id);
+
+        mongoTemplate.remove(toDeleteProduct);
         return "Product Deleted-"+id;
+    }
+
+    @GetMapping("/product")
+    public List<Product> getProductList(){
+        return mongoTemplate.findAll(Product.class);
     }
 
 }
