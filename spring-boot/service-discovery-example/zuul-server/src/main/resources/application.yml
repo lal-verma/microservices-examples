@@ -1,0 +1,5 @@
+zuul:
+  routes:
+    product:
+      path: /product_catalog/**
+      serviceId: product_catalog
