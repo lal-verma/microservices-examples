@@ -25,8 +25,6 @@ public class ShoppingCartService {
             Product itemProduct = restTemplate.getForObject("http://localhost:8080/product/" + item.getProductId(),
                     Product.class);
 
-            System.out.println("itemProduct:" + itemProduct);
-
             if (itemProduct != null && itemProduct.id != null) {
                 // adding total item price in the shopping cart item
                 item.setTotalItemPrice(itemProduct.getUnitPrice() * item.quantity);
@@ -36,17 +34,5 @@ public class ShoppingCartService {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "cart or item missing");
     }
-
-    // @DeleteMapping("/cart/{id}")
-    // public ServerResponse deleteCart(@PathVariable int id) {
-    // repository.deleteById(id);
-    // return ServerResponse.ok().body("Cart Deleted");
-    // }
-
-    // @DeleteMapping("/cart/item/{id}")
-    // public ServerResponse deleteCartItem(@PathVariable int id) {
-
-    // return ServerResponse.ok().body("Cart Updated");
-    // }
 
 }
