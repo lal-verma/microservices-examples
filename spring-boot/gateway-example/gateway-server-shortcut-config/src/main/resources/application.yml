@@ -1,0 +1,15 @@
+server:
+  port: 9090
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: product_service_v1
+        uri: http://localhost:8081
+        predicates:
+        - Path=/product/**
+        - Query=src,mobile
+      - id: product_service_v2
+        uri: http://localhost:8082
+        predicates:
+        - Path=/product/**
