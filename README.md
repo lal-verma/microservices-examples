@@ -4,3 +4,4 @@
 ### [Service Discovery](/spring-boot/service-discovery-example)
 ### [Distributed Tracing](/spring-boot/distributed-tracing-example)
 ### [API Gateway](spring-boot/gateway-example)
+### [Circuit Breaker](spring-boot/circuit-breaker-example/reactive)
