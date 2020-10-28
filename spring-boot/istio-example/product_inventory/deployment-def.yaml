@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-inventory
+  namespace: default
+  labels:
+    app: product-inventory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-inventory
+  template:
+    metadata:
+      labels:
+        app: product-inventory
+    spec:
+      containers:
+      - name: product-inventory
+        image: product-inventory:v0.0.2
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
