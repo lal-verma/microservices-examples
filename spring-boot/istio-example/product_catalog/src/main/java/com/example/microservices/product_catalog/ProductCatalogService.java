@@ -40,7 +40,6 @@ public class ProductCatalogService {
     private String psPort;
 
 
-
     @GetMapping("/product/{id}")
     public Product getProductDetails(@PathVariable  String id){
         Product product =  mongoTemplate.findById(id,Product.class);

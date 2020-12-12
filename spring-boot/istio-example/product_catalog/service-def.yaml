@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: product-catalog
+    service: product-catalog
+  name: product-catalog
+  namespace: default
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: product-catalog
+  type: ClusterIP
