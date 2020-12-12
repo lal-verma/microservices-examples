@@ -3,6 +3,7 @@ package com.example.microservices.product_catalog;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,10 +33,18 @@ public class ProductCatalogService {
         return mongoTemplate.save(product);        
     }
 
+    @Value("${PRODUCT_INVENTORY_DEPLOYMENT_SERVICE_HOST}")
+    private String psHost;
+
+    @Value("${PRODUCT_INVENTORY_DEPLOYMENT_SERVICE_PORT}")
+    private String psPort;
+
+
+
     @GetMapping("/product/{id}")
     public Product getProductDetails(@PathVariable  String id){
         Product product =  mongoTemplate.findById(id,Product.class);
-        ProductInventory productInventory = restTemplate.getForObject("http://localhost:8080/inventory/" + id,ProductInventory.class);
+        ProductInventory productInventory = restTemplate.getForObject("http://"+psHost+":"+psPort+"/inventory/" + id,ProductInventory.class);
 
         product.setProductInventory(productInventory);
 
