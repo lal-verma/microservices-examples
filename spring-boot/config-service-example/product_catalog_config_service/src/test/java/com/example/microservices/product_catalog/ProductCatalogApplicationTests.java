@@ -1,18 +1,18 @@
 package com.example.microservices.product_catalog;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,14 +25,14 @@ class ProductCatalogApplicationTests {
 	@Autowired
 	private MockMvc mvc;
 
-	private String testProductId="test-product-444";
+	private String testProductId="test-product-333";
 
 	@Test
 	@Order(1)
 	public void testCreateProduct() throws Exception{
 		this.mvc.perform(post("/product")
            .contentType(MediaType.APPLICATION_JSON)
-           .content("{\"id\":\""+testProductId+"\",\"title\":\"test-product-2\",\"desc\":\"test product 2\",\"imagePath\":\"gc://image-path\",\"unitPrice\":10.00}") 
+           .content("{\"id\":\""+testProductId+"\",\"title\":\"test-product-123\",\"desc\":\"test product 123\",\"imagePath\":\"gc://image-path\",\"unitPrice\":10.00}") 
            .accept(MediaType.APPLICATION_JSON))
 		   .andExpect(status().isOk());
 	}
@@ -50,7 +50,7 @@ class ProductCatalogApplicationTests {
 	public void testUpdateProduct() throws Exception{
 		this.mvc.perform(put("/product")
            .contentType(MediaType.APPLICATION_JSON)
-           .content("{\"id\":\""+testProductId+"\",\"title\":\"test-product-updated\",\"desc\":\"test product updated\",\"imagePath\":\"gc://image-path\",\"unitPrice\":10.00}")) 
+           .content("{\"id\":\""+testProductId+"\",\"title\":\"test-product-123_1\",\"desc\":\"test product updated\",\"imagePath\":\"gc://image-path\",\"unitPrice\":10.00}")) 
 		   .andExpect(status().isOk());
 	}
 
@@ -72,5 +72,13 @@ class ProductCatalogApplicationTests {
 		.andExpect(status().isOk());
 	}
 
+
+	@Test
+	@Order(6)
+	public void testGetProductDetails_v3() throws Exception {
+		this.mvc.perform(get("/product/"+testProductId))
+		.andDo(print())
+		.andExpect(status().isOk());
+	}
 
 }

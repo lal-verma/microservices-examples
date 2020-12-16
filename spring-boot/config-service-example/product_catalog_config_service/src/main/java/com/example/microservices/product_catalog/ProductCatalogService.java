@@ -3,7 +3,11 @@ package com.example.microservices.product_catalog;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RefreshScope
 public class ProductCatalogService {
     
     @Autowired
@@ -43,9 +48,15 @@ public class ProductCatalogService {
         return "Product Deleted-"+id;
     }
 
+    @Value("${product.list.sort.column.default}")
+    private String defaultSortCol;
+
     @GetMapping("/product")
     public List<Product> getProductList(){
-        return mongoTemplate.findAll(Product.class);
+        System.out.println("getting product list sorted by "+defaultSortCol);
+        Query query = new Query();
+        query.with(Sort.by(Sort.Direction.ASC, defaultSortCol));
+        return mongoTemplate.find(query,Product.class);
     }
 
 }
