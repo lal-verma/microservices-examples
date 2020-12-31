@@ -1,0 +1,11 @@
+{
+  "summary": {
+    "title": "Product Catalog - Sample",
+    "owner": "",
+    "description": "This is a sample threat model for product catalog service"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": []
+  }
+}
