@@ -1,0 +1,17 @@
+{
+  "summary": {
+    "title": "Ecommerce - Microservices",
+    "owner": "",
+    "description": "Sample threat models for an e-commerce system"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "title": "product catalog",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 0
+      }
+    ]
+  }
+}
